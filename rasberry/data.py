@@ -41,9 +41,10 @@ if __name__ == "__main__":
     init_db('../sensors.db')
     start_date = datetime.datetime(2025, 3, 1)
     end_date = datetime.datetime(2025, 3, 31)
+    col = input("Sensor: >>")
     for i in generate_random_datetimes(start_date, end_date, 1000):
         value = random.randint(10, 100)
         time = i
         print(time)
-        insert_sensors("light", value, time.timestamp())
+        insert_sensors(col, value, time.timestamp())
 
