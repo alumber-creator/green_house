@@ -119,8 +119,8 @@ async def test_gen(callback: types.CallbackQuery):
         callback_data="admin_panel")
     )
     builder.adjust(1, 1)
-    await test_generation()
     await callback.answer()
+    await test_generation()
     await callback.message.edit_text("""<b>Панель администратора</b>
 
 Данные успешно сгенерированы""", reply_markup=builder.as_markup(),
