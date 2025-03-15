@@ -5,6 +5,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from rasberry.data import test_generation
 from tools.database import *
 from datetime import datetime
 
@@ -90,6 +91,10 @@ async def panel(callback: types.CallbackQuery):
 async def admin_panel(callback: types.CallbackQuery):
     builder = InlineKeyboardBuilder()
     builder.add(types.InlineKeyboardButton(
+        text="Тестовая генерация значений датчика",
+        callback_data="test.gen")
+    )
+    builder.add(types.InlineKeyboardButton(
         text="Назад",
         callback_data="start")
     )
@@ -99,6 +104,26 @@ async def admin_panel(callback: types.CallbackQuery):
     await callback.message.edit_text("""<b>Панель администратора</b>
     
 Для отправки уведомления, используйте команду /send_notification""", reply_markup=builder.as_markup(),
+                                     parse_mode=ParseMode.HTML)
+
+
+@dp.callback_query(F.data == "test.gen")
+async def test_gen(callback: types.CallbackQuery):
+    builder = InlineKeyboardBuilder()
+    builder.add(types.InlineKeyboardButton(
+        text="Тестовая генерация значений датчика",
+        callback_data="test.gen")
+    )
+    builder.add(types.InlineKeyboardButton(
+        text="Назад",
+        callback_data="admin_panel")
+    )
+    builder.adjust(1, 1)
+    await test_generation()
+    await callback.answer()
+    await callback.message.edit_text("""<b>Панель администратора</b>
+
+Данные успешно сгенерированы""", reply_markup=builder.as_markup(),
                                      parse_mode=ParseMode.HTML)
 
 

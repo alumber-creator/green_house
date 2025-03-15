@@ -7,7 +7,7 @@ from tools.database import *
 
 
 def insert_sensors(sensor: str, value: float, time: datetime.datetime):
-    conn = create_connection(name='../sensors.db')
+    conn = create_connection(name='sensors.db')
     cursor = conn.cursor()
     cursor.execute(f'''INSERT INTO {sensor} (value, time) VALUES ({value}, {time})''')
     conn.commit()
@@ -36,9 +36,8 @@ def generate_random_datetimes(start_str, end_str, count=1):
     return results
 
 
-
-if __name__ == "__main__":
-    init_db('../sensors.db')
+async def test_generation():
+    init_db('sensors.db')
     start_date = datetime.datetime(2025, 3, 1)
     end_date = datetime.datetime(2025, 3, 31)
     col = input("Sensor: >>")
